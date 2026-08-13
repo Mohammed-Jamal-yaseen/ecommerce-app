@@ -4,7 +4,7 @@ import {
   Matches,
   MinLength,
   IsString,
-  IsOptional,
+  IsBoolean,
 } from 'class-validator';
 
 export class RegisterDto {
@@ -24,7 +24,11 @@ export class RegisterDto {
   )
   password!: string;
 
-  @IsOptional()
+  @MinLength(2, { message: 'Name must be at least 2 characters long' })
   @IsString()
-  name?: string;
+  name!: string;
+
+  @IsBoolean()
+  @IsEmpty({ message: 'Accepted term must not be empty' })
+  acceptedTerms!: boolean;
 }

@@ -13,10 +13,18 @@ export class PrismaService
   implements OnModuleInit, OnModuleDestroy
 {
   private readonly logger = new Logger(PrismaService.name);
+
   constructor() {
+    const connectionString = process.env.DATABASE_URL;
+
+    if (!connectionString || connectionString.trim() === '') {
+      throw new Error('Missing required environment variable: DATABASE_URL');
+    }
+
     const adapter = new PrismaPg({
-      connectionString: process.env.DATABASE_URL,
+      connectionString,
     });
+
     super({ adapter });
   }
 
